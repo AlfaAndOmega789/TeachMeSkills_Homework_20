@@ -5,7 +5,7 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/sys";
+        String url = "jdbc:mysql://localhost:3306/users?autoReconnect=true&useSSL=false";
         String user = "root";
         String password = "root";
 
