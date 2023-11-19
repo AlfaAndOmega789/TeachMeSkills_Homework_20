@@ -11,8 +11,12 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        Driver driver = new Driver();
-        DriverManager.registerDriver(driver);
+        try {
+            Driver driver = new Driver();
+            DriverManager.registerDriver(driver);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
 
         try (Connection conn =  DriverManager.getConnection(URL, USERNAME, PASSWORD)){
             Statement statement = conn.createStatement();
@@ -22,19 +26,33 @@ public class Main {
 //                id integer primary key auto_increment, name varchar(100))
 //                """);
 
-            String sql = "INSERT INTO user (id, name) Values(?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, 2);
-            preparedStatement.setString(2, "Ivan");
-            preparedStatement.execute();
+//            String sql = "INSERT INTO user (id, name) Values(?, ?)";
+//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+//            preparedStatement.setInt(2, 2);
+//            preparedStatement.setString(2, "Ivan");
+//            preparedStatement.execute();
 
-            ResultSet set = preparedStatement.executeQuery("select * from user");
+            int res = statement.executeUpdate("UPDATE users SET name = 'NEW NAME' WHERE ID = 3;");
+            System.out.println(res);
 
-            while(set.next()){
-                System.out.println(set.getInt("id") + " " + set.getString("name"));
+            int res1 = statement.executeUpdate("DELETE FROM users WHERE id  = 5");
+            System.out.println(res1);
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+
+//            System.out.println(res);
+//            ResultSet set = preparedStatement.executeQuery("select * from user");
+
+//            while(set.next()){
+//                System.out.println(set.getInt("id") + " " + set.getString("name"));
+//            }
+
+//            conn.setAutoCommit(true);
+            conn.close();
+
+            if(conn.isClosed()){
+                System.out.println("Соединение с БД закрыто!");
             }
-
-            conn.setAutoCommit(true);
         } catch (SQLException ex) {
             System.out.println(ex);
             System.out.println("Неудалось загрузить класс драйвер");
