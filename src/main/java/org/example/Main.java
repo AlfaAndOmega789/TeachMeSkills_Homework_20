@@ -26,11 +26,13 @@ public class Main {
 //                id integer primary key auto_increment, name varchar(100))
 //                """);
 
-//            String sql = "INSERT INTO user (id, name) Values(?, ?)";
-//            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-//            preparedStatement.setInt(2, 2);
-//            preparedStatement.setString(2, "Ivan");
-//            preparedStatement.execute();
+            String sql = "INSERT INTO users (id, name, age, email) Values(?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, 11 );
+            preparedStatement.setString(2, "Ivan");
+            preparedStatement.setInt(3, 21 );
+            preparedStatement.setString(4, "vanya.koval1998@gmail.com");
+            preparedStatement.execute();
 
             int res = statement.executeUpdate("UPDATE users SET name = 'NEW NAME' WHERE ID = 3;");
             System.out.println(res);
@@ -39,6 +41,10 @@ public class Main {
             System.out.println(res1);
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+
+//            statement.addBatch("INSERT INTO users(id, name, email) VALUES (10, 'Sergei', 'vanya.koval1998@gmail.com')");
+//            statement.executeBatch();
+//            statement.clearBatch();
 
 //            System.out.println(res);
 //            ResultSet set = preparedStatement.executeQuery("select * from user");
