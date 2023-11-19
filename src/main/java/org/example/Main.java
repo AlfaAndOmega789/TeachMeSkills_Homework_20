@@ -21,11 +21,13 @@ public class Main {
         try (Connection conn =  DriverManager.getConnection(URL, USERNAME, PASSWORD)){
             Statement statement = conn.createStatement();
 
+            //create table
 //            statement.execute("""
 //                create table users(
 //                id integer primary key auto_increment, name varchar(100))
 //                """);
 
+            //create user
             String sql = "INSERT INTO users (id, name, age, email) Values(?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, 11 );
@@ -34,12 +36,15 @@ public class Main {
             preparedStatement.setString(4, "vanya.koval1998@gmail.com");
             preparedStatement.execute();
 
+            //update
             int res = statement.executeUpdate("UPDATE users SET name = 'NEW NAME' WHERE ID = 3;");
             System.out.println(res);
 
+            //delete
             int res1 = statement.executeUpdate("DELETE FROM users WHERE id  = 5");
             System.out.println(res1);
 
+            //read
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
 
 //            statement.addBatch("INSERT INTO users(id, name, email) VALUES (10, 'Sergei', 'vanya.koval1998@gmail.com')");
